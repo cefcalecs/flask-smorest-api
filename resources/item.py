@@ -55,7 +55,9 @@ class ItemList(MethodView):
     def get(self):
         return ItemModel.query.all()
 
-    @jwt_required()
+    # this resource requires fresh token
+    # you would do this when changing password, deleting an account
+    @jwt_required(fresh=True) 
     @blp.arguments(ItemSchema)
     @blp.response(201, ItemSchema)
     def post(self, item_data):
